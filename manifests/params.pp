@@ -137,10 +137,19 @@ class elasticsearch::params {
       $service_hasrestart = true
       $service_hasstatus  = true
       $service_pattern    = $service_name
-      $service_providers  = [ 'init' ]
       $defaults_location  = '/etc/sysconfig'
-      $init_template      = 'elasticsearch.RedHat.erb'
-      $pid_dir            = '/var/run/elasticsearch'
+      case $::operatingsystemmajrelease {
+        '6': {
+          $service_providers  = [ 'init' ]
+          $init_template      = 'elasticsearch.RedHat.erb'
+          $pid_dir            = '/var/run/elasticsearch'
+        }
+        '7': {
+          $service_providers  = 'systemd'
+          $init_template      = 'elasticsearch.OpenSuSE.erb'
+          $pid_dir            = false
+        }
+      }
     }
     'Debian', 'Ubuntu': {
       $service_name       = 'elasticsearch'
