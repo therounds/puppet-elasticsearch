@@ -56,7 +56,6 @@ class elasticsearch::config {
 
     file { $elasticsearch::params::homedir:
       ensure  => 'directory',
-      recurse => true
     }
 
     file { $elasticsearch::plugindir:
@@ -66,7 +65,6 @@ class elasticsearch::config {
 
     file { $elasticsearch::datadir:
       ensure  => 'directory',
-      recurse => true
     }
 
 
